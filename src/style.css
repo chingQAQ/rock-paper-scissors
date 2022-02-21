@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html,
+    body {
+        height: 100vh;
+        font-weight: 600;
+        font-family: 'Barlow Semi Condensed', sans-serif;
+        color: theme('colors.neutral-dark');
+        background: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
+    }
+}
+
+.close {
+    background-image: url('/src/assets/icon-close.svg');
+    @apply bg-no-repeat bg-center bg-cover;
+}
