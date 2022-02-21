@@ -17,3 +17,59 @@
     background-image: url('/src/assets/icon-close.svg');
     @apply bg-no-repeat bg-center bg-cover;
 }
+
+.icon {
+    @apply w-[50px] h-[50px];
+    @apply bg-no-repeat bg-center bg-contain;
+}
+
+.icon-scissors {
+    background-image: url('/src/assets/icon-scissors.svg');
+    @apply icon;
+}
+
+.icon-paper {
+    background-image: url('/src/assets/icon-paper.svg');
+    @apply icon;
+}
+
+.icon-rock {
+    background-image: url('/src/assets/icon-rock.svg');
+    @apply icon;
+}
+
+.icon-lizard {
+    background-image: url('/src/assets/icon-lizard.svg');
+    @apply icon;
+}
+
+.icon-spock {
+    background-image: url('/src/assets/icon-spock.svg');
+    @apply icon;
+}
+
+.shape-color-scissors {
+    background: linear-gradient(to top, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
+    box-shadow: 0 6px 0 hsl(28, 85%, 50%);
+}
+
+.shape-color-paper {
+    background: linear-gradient(to top, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
+    box-shadow: 0 6px 0 hsl(240, 69%, 52%);
+}
+
+.shape-color-rock {
+    background: linear-gradient(to top, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
+    box-shadow: 0 6px 0 hsl(370, 71%, 32%);
+}
+
+.shape-color-lizard {
+    background: linear-gradient(to top, hsl(261, 73%, 60%), hsl(261, 72%, 63%));
+    box-shadow: 0 6px 0 hsl(261, 73%, 50%);
+}
+
+.shape-color-spock {
+    background: linear-gradient(to top, hsl(189, 59%, 53%), hsl(189, 58%, 57%));
+    box-shadow: 0 6px 0 hsl(189, 59%, 43%);
+
+}

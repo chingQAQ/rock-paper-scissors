@@ -20,10 +20,10 @@ function App() {
         <div className="py-6 px-8 rounded-2xl border-4 border-header-outline">
           <h1 className="sr-only">ROCK, PAPER, SCISSORS, LIZARD, SPOCK</h1>
           <section className="flex justify-between">
-            <div className="sm:flex-[0_1_30%] md:flex-[0_1_17%]">
+            <div className="flex-[0_1_120px]">
               <Logo className="w-full h-full"/>
             </div>
-            <div className="flex flex-col justify-center items-center sm:flex-[0_1_35%] md:flex-[0_1_20%] h-[150px] p-4 rounded-2xl bg-white">
+            <div className="flex flex-col justify-center items-center flex-[0_1_150px] h-[130px] p-4 rounded-2xl bg-white">
               <h2 className="text-[18px] text-neutral-score tracking-widest">SCORE</h2>
               <h3 className="text-[70px] text-neutral-dark font-bold leading-none tracking-wider">12</h3>
             </div>
