@@ -1,8 +1,10 @@
-import React, { memo, useState, useEffect, useCallback, createElement } from 'react';
+import React, { memo, useState, useEffect, useCallback, createElement, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Pentagon from '@/assets/bg-pentagon.svg?component';
 import { MEMBERS, battle } from '@/logic';
 import clsx from 'clsx';
+import { Button } from '@/components';
+import StoreContext from '@/components/store/context';
 
 const GameBackGround = () => (
     <Pentagon></Pentagon>
@@ -60,6 +62,10 @@ export function GameBase() {
 
     }, []);
 
+    const {
+        action: { addSource }
+    } = useContext(StoreContext);
+
     useEffect(() => {
 
         let time;
@@ -72,9 +78,11 @@ export function GameBase() {
 
             setComputer(MEMBERS.find(i => i.id === random));
 
-            clearTimeout(time);
-
         }, 1000);
+
+        return () => {
+            clearTimeout(time);
+        };
 
     }, [player]);
 
@@ -85,20 +93,34 @@ export function GameBase() {
         const win = battle(player, computer);
 
         setWinner(() => {
-            let ret = 'draw';
+            let ret = 'DRAW';
 
             if (win.name === player.name) {
-                ret = 'You Win';
+                ret = 'YOU WIN';
             }
 
             if (win.name === computer.name) {
-                ret = 'You Lose';
+                ret = 'YOU LOSE';
             }
 
             return ret;
         });
 
     }, [computer]);
+
+    useEffect(() => {
+
+        if (winner === 'YOU WIN') {
+            addSource();
+        }
+
+    }, [winner]);
+
+    const restGame = useCallback(() => {
+        setPlayer(null);
+        setComputer(null);
+        setWinner(null);
+    }, []);
 
     return (
         <>
@@ -135,7 +157,7 @@ export function GameBase() {
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 place-content-center mt-[100px]">
+                    <div className="grid grid-cols-[repeat(3,minmax(min-content,max-content))] place-content-center gap-10 mt-[100px]">
                         <div className="flex flex-col justify-start relative">
                             <h2 className="text-center text-white text-[36px] tracking-widest">YOU PICKED</h2>
                             <div className="mt-[50px] grid place-content-center">
@@ -145,6 +167,17 @@ export function GameBase() {
                                 />
                             </div>
                         </div>
+                        { winner && (
+                            <div className="flex flex-col justify-center">
+                                <p className="text-6xl text-white mb-6">{winner}</p>
+                                <Button
+                                    className="bg-white w-full py-5 rounded-md"
+                                    onClick={restGame}
+                                >
+                                    <span className="text-neutral-dark">PLAY AGAIN</span>
+                                </Button>
+                            </div>
+                        )}
                         <div className="flex flex-col justify-start relative">
                             <h2 className="text-center text-white text-[36px] tracking-widest">THE HOUSE PICKED</h2>
                             <div className="mt-[50px] grid place-content-center">
@@ -153,10 +186,6 @@ export function GameBase() {
                                         size="300"
                                         {...computer}
                                     />
-                                )}
-
-                                {winner && (
-                                    <>{winner}</>
                                 )}
                             </div>
                         </div>

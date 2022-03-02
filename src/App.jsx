@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import Logo from '@/assets/logo-bonus.svg?component';
 import Rules from '@/assets/image-rules-bonus.svg';
 import clsx from 'clsx';
@@ -8,9 +8,15 @@ import {
   Game
 } from '@/components';
 
-function App() {
+import StoreContext, { PageProvider } from '@/components/store/context';
+
+function Main() {
 
   const [ruleState, setRuleState] = useState(false);
+
+  const {
+    state: { count }
+  } = useContext(StoreContext);
 
   const rulesClickHandler = useCallback(() => setRuleState(p => !p), []);
 
@@ -21,11 +27,11 @@ function App() {
           <h1 className="sr-only">ROCK, PAPER, SCISSORS, LIZARD, SPOCK</h1>
           <section className="flex justify-between">
             <div className="flex-[0_1_120px]">
-              <Logo className="w-full h-full"/>
+              <Logo className="w-full h-full" />
             </div>
             <div className="flex flex-col justify-center items-center flex-[0_1_150px] h-[130px] p-4 rounded-2xl bg-white">
               <h2 className="text-[18px] text-neutral-score tracking-widest">SCORE</h2>
-              <h3 className="text-[70px] text-neutral-dark font-bold leading-none tracking-wider">12</h3>
+              <h3 className="text-[70px] text-neutral-dark font-bold leading-none tracking-wider">{count}</h3>
             </div>
           </section>
         </div>
@@ -53,6 +59,14 @@ function App() {
         <img className="w-full" src={Rules} alt="GAME RULES" />
       </LightBox>
     </>
+  );
+}
+
+function App() {
+  return (
+    <PageProvider>
+      <Main></Main>
+    </PageProvider>
   );
 }
 
