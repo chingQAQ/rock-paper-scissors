@@ -39,8 +39,9 @@ function Main() {
       </article>
       <Button
         className={clsx(
-          'absolute bottom-8 right-8 text-xl rounded-xl border-2',
-          'py-2 border-header-outline min-w-[150px] tracking-widest'
+          'absolute bottom-8 sm:right-1/2 md:right-8 text-xl rounded-xl border-2',
+          'py-2 border-header-outline min-w-[150px] tracking-widest',
+          'sm:translate-x-1/2 md:translate-x-0'
         )}
         onClick={rulesClickHandler}
       >
@@ -50,13 +51,19 @@ function Main() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-neutral-dark text-[36px] font-bold leading-none">RULES</h2>
           <Button
-            className="-indent-8 overflow-hidden w-6 h-6 close"
+            className="-indent-8 overflow-hidden w-6 h-6 close sm:hidden md:block"
             onClick={rulesClickHandler}
           >
             x
           </Button>
         </div>
         <img className="w-full" src={Rules} alt="GAME RULES" />
+        <Button
+          className="-indent-8 overflow-hidden w-6 h-6 close sm:block md:sm"
+          onClick={rulesClickHandler}
+        >
+          x
+        </Button>
       </LightBox>
     </>
   );

@@ -19,7 +19,7 @@
 }
 
 .icon {
-    @apply w-[50px] h-[50px];
+    @apply w-[70%] h-[70%];
     @apply bg-no-repeat bg-center bg-contain;
 }
 
@@ -48,27 +48,27 @@
     @apply icon;
 }
 
-.shape-color-scissors {
+.shape-color-scissors::after {
     background: linear-gradient(to top, hsl(39, 89%, 49%), hsl(40, 84%, 53%));
     box-shadow: 0 6px 0 hsl(28, 85%, 50%);
 }
 
-.shape-color-paper {
+.shape-color-paper::after {
     background: linear-gradient(to top, hsl(230, 89%, 62%), hsl(230, 89%, 65%));
     box-shadow: 0 6px 0 hsl(240, 69%, 52%);
 }
 
-.shape-color-rock {
+.shape-color-rock::after {
     background: linear-gradient(to top, hsl(349, 71%, 52%), hsl(349, 70%, 56%));
     box-shadow: 0 6px 0 hsl(370, 71%, 32%);
 }
 
-.shape-color-lizard {
+.shape-color-lizard::after {
     background: linear-gradient(to top, hsl(261, 73%, 60%), hsl(261, 72%, 63%));
     box-shadow: 0 6px 0 hsl(261, 73%, 50%);
 }
 
-.shape-color-spock {
+.shape-color-spock::after {
     background: linear-gradient(to top, hsl(189, 59%, 53%), hsl(189, 58%, 57%));
     box-shadow: 0 6px 0 hsl(189, 59%, 43%);
 

@@ -1,0 +1,68 @@
+
+.winnerBase {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0;
+    @apply bg-white/[0.5];
+    @apply w-0 h-0 rounded-full;
+    animation-fill-mode: both;
+    animation-duration: 0.75s;
+}
+
+.winner-light {
+    @apply winnerBase;
+    animation-name: circle-expand;
+}
+
+.winner-light::before,
+.winner-light::after {
+    @apply content-[''];
+    @apply winnerBase;
+    animation-name: circle-expand-before;
+    animation-delay: 0.2s;
+}
+
+.winner-light::after {
+    animation-name: circle-expand-after;
+    animation-delay: 0.2s;
+}
+
+@keyframes circle-expand {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+
+    to {
+        width: 1000px;
+        height: 1000px;
+        opacity: 0;
+    }
+}
+
+@keyframes circle-expand-before {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+
+    to {
+        width: 850px;
+        height: 850px;
+        opacity: 0;
+    }
+}
+
+@keyframes circle-expand-after {
+    from {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+
+    to {
+        width: 700px;
+        height: 700px;
+        opacity: 0;
+    }
+}

@@ -4,7 +4,7 @@ import { useStore } from './useStore';
 
 const StoreContext = React.createContext();
 
-const { count } = JSON.parse(localStorage.getItem('source'));
+const { count } = JSON.parse(localStorage.getItem('source')) || { count: 0};
 
 const DEFAULT_SOURCE = {
     count: count || 0

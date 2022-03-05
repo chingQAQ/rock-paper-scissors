@@ -1,54 +1,58 @@
-import React, { memo, useState, useEffect, useCallback, createElement, useContext } from 'react';
+import React, {
+    memo,
+    useState,
+    useEffect,
+    useCallback,
+    createElement,
+    useContext,
+    useRef
+} from 'react';
 import PropTypes from 'prop-types';
 import Pentagon from '@/assets/bg-pentagon.svg?component';
 import { MEMBERS, battle } from '@/logic';
 import clsx from 'clsx';
 import { Button } from '@/components';
 import StoreContext from '@/components/store/context';
+import { WinnerLight } from '@/components';
+
 
 const GameBackGround = () => (
     <Pentagon></Pentagon>
 );
 
-function Shape({ id, name, className, onClick, size }) {
+function Shape({ id, name, className, onClick }) {
 
     return createElement(
         'div',
         {
-            style: {
-                width: `${size || 120}px`,
-                height: `${size || 120}px`
-            },
             className: clsx(
-                className,
+                'w-[120px] h-[120px] bg-white',
                 'rounded-full cursor-pointer',
-                'flex justify-center items-center z-1',
-                `shape-color-${name}`
+                'flex justify-center items-center z-[1]',
+                'shadow-[inset_0_7px_0_rgba(0,0,0,0.1)]',
+                `after:content-[''] after:w-full after:h-full shape-color-${name}`,
+                `after:absolute after:rounded-full after:z-[0]`,
+                className
             ),
             onClick: onClick && (() => onClick(id))
         },
-        <div
-            style={{
-                width: `${(parseInt(size, 10)) - (size / 4) || 90}px`,
-                height: `${(parseInt(size, 10)) - (size / 4) || 90}px`
-            }}
-            className={clsx(
-                'rounded-full bg-white',
-                'flex justify-center items-center',
-                'shadow-[inset_0_7px_0_rgba(0,0,0,0.1)]'
-            )}>
-            <div
-                style={{
-                    width: `${(parseInt(size, 10)) / 2}px`,
-                    height: `${(parseInt(size, 10)) / 2}px`
-                }}
-                className={'icon-' + name}
-            ></div>
+        <div className="relative z-[1] w-full h-full flex justify-center items-center">
+            <div className="w-[70%] h-[70%] rounded-full flex justify-center items-center bg-white">
+                <div
+                    className={clsx(
+                        'icon-' + name,
+                    )}>
+                </div>
+            </div>
         </div>
     );
 }
 
 export function GameBase() {
+
+    const playerRef = useRef();
+
+    const computerRef = useRef();
 
     const [player, setPlayer] = useState(null);
 
@@ -112,6 +116,16 @@ export function GameBase() {
 
         if (winner === 'YOU WIN') {
             addSource();
+
+            WinnerLight.trigger({
+                root: playerRef.current
+            });
+        }
+
+        if (winner === 'YOU LOSE') {
+            WinnerLight.trigger({
+                root: computerRef.current
+            });
         }
 
     }, [winner]);
@@ -126,7 +140,7 @@ export function GameBase() {
         <>
             { player == null 
                 ? (
-                    <div className="grid grid-cols-[0.4fr] place-content-center mt-[100px]">
+                    <div className="grid sm:grid-cols-[0.8fr] md:grid-cols-[0.4fr] place-content-center mt-[100px]">
                         <div className="relative">
                             <GameBackGround />
                             <Shape
@@ -157,21 +171,23 @@ export function GameBase() {
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-[repeat(3,minmax(min-content,max-content))] place-content-center gap-10 mt-[100px]">
+                    <div className="grid sm:grid-cols-2 md:grid-cols-[repeat(3,minmax(min-content,max-content))] place-content-center gap-10 mt-[100px]">
                         <div className="flex flex-col justify-start relative">
-                            <h2 className="text-center text-white text-[36px] tracking-widest">YOU PICKED</h2>
-                            <div className="mt-[50px] grid place-content-center">
+                            <h2 className="text-center text-white sm:text-[24px] md:text-[36px] tracking-widest">YOU PICKED</h2>
+                            <div
+                                ref={playerRef}
+                                className="mt-[50px] grid place-content-center">
                                 <Shape
-                                    size="300"
+                                    className={'relative sm:w-[150px] sm:h-[150px] md:w-[300px] md:h-[300px]'}
                                     {...player}
                                 />
                             </div>
                         </div>
                         { winner && (
-                            <div className="flex flex-col justify-center">
-                                <p className="text-6xl text-white mb-6">{winner}</p>
+                            <div className="flex flex-col justify-center sm:col-span-2 md:col-span-1 sm:order-last md:order-none">
+                                <p className="text-6xl text-center text-white mb-6">{winner}</p>
                                 <Button
-                                    className="bg-white w-full py-5 rounded-md"
+                                    className="bg-white w-full py-5 rounded-md sm:max-w-[280px] md:max-w-auto mx-auto"
                                     onClick={restGame}
                                 >
                                     <span className="text-neutral-dark">PLAY AGAIN</span>
@@ -179,11 +195,14 @@ export function GameBase() {
                             </div>
                         )}
                         <div className="flex flex-col justify-start relative">
-                            <h2 className="text-center text-white text-[36px] tracking-widest">THE HOUSE PICKED</h2>
-                            <div className="mt-[50px] grid place-content-center">
+                            <h2 className="text-center text-white sm:text-[24px] md:text-[36px] tracking-widest">THE HOUSE PICKED</h2>
+                            <div
+                                ref={computerRef}
+                                className="mt-[50px] grid place-content-center"
+                            >
                                 {computer && (
                                     <Shape
-                                        size="300"
+                                        className={'relative sm:w-[150px] sm:h-[150px] md:w-[300px] md:h-[300px]'}
                                         {...computer}
                                     />
                                 )}
@@ -202,6 +221,5 @@ Shape.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     className: PropTypes.string,
-    onClick: PropTypes.func,
-    size: PropTypes.string
+    onClick: PropTypes.func
 };

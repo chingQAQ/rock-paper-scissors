@@ -10,7 +10,12 @@ export function LightBox ({state, children}) {
             'bg-[rgba(0,0,0,0.5)] flex justify-center items-center',
             state ? 'block' : 'hidden'
         )}>
-            <div className="bg-white rounded-md px-8 pt-6 pb-10">
+            <div className={clsx(
+                'bg-white sm:rounded-none md:rounded-md',
+                'px-8 sm:py-6 md:pt-6 md:pb-10',
+                'sm:w-full sm:h-full md:w-auto md:h-auto',
+                'sm:flex md:block justify-around flex-col items-center'
+            )}>
                 {children}
             </div>
         </section>
