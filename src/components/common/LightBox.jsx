@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 export function LightBox ({state, children}) {
     return (
         <section className={clsx(
-            'fixed w-full h-full top-0 left-0',
+            'fixed w-full h-full top-0 left-0 z-50',
             'bg-[rgba(0,0,0,0.5)] flex justify-center items-center',
             state ? 'block' : 'hidden'
         )}>
